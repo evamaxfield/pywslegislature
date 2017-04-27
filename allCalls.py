@@ -249,3 +249,31 @@ documents_classes           = [ 'documentClass=Amendments',
 # returns all items discussed during target
 #dictRead = httpGET(services_all, service_committee_meetings, 'GetCommitteeMeetingItems', ['agendaId=27512'])
 #pprint(dictRead['ArrayOfCommitteeMeetingItem']['CommitteeMeetingItem'])
+
+
+# EXAMPLE CHAIN CALL
+# get all house committees and their members
+def exampleChainCall():
+    committeesRead = httpGET(services_all, service_committee, 'GetActiveHouseCommittees', [])
+    committeesList = []
+    for committee in committeesRead['ArrayOfCommittee']['Committee']:
+        if ('&' not in committee['Name']):
+            committeesList.append('committeeName=' + committee['Name'])
+
+    print('Safe to run committees:')
+    print(committeesList)
+    print('---------------------------------------------------------------')
+
+    committeesDict = {}
+    for committee in committeesList:
+        membersRead = httpGET(services_all, service_committee, 'GetActiveCommitteeMembers', [agency_house, committee])
+        membersList = []
+        for member in membersRead['ArrayOfMember']['Member']:
+            membersList.append(member['Name'])
+
+        committeesDict[committee] = membersList
+
+    return committeesDict
+
+#returnedChain = exampleChainCall()
+#pprint(returnedChain)
