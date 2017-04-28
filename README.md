@@ -1,7 +1,7 @@
 # wa-legislature
 Data grabbing and potential redesign of Washington State Legislative Web Services.
 
-[Link to their WSLWebServices API](http://wslwebservices.leg.wa.gov/#Table1)
+[Link to the WSLWebServices API](http://wslwebservices.leg.wa.gov/#Table1)
 
 ## About the Project:
 I am starting up this project because I personally think the Washington Legislature website could use a bit of a UX makeover.
@@ -18,7 +18,7 @@ There is additionally an example of a chain api call in the allCalls.py file to 
 
 ## Completed and Uncompleted API Calls:
 - [ ] Amendments
-- [x] Committees
+- [x] Committees (Known Issues with Committee Names)
 - [ ] Committee Actions
 - [x] Committee Meetings
 - [x] Documents
