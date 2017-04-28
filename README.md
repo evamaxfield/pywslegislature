@@ -17,7 +17,7 @@ The files currently in this repo aren't a completed list of API calls to WSLWebS
 There is additionally an example of a chain api call in the allCalls.py file to understand how they can work together.
 
 ## Completed and Uncompleted API Calls:
-- [ ] Amendments
+- [x] Amendments
 - [x] Committees (Known Issues with Committee Names)
 - [ ] Committee Actions
 - [x] Committee Meetings

@@ -14,12 +14,15 @@ services_all                = 'http://wslwebservices.leg.wa.gov/'
 # connection to specific service
 service_committee           = 'CommitteeService.asmx/'
 service_committee_meetings  = 'CommitteeMeetingService.asmx/'
+service_committee_actions   = 'CommitteeActionService.asmx/'
+service_amendment           = 'AmendmentService.asmx/'
 service_document            = 'LegislativeDocumentService.asmx/'
 service_legislation         = 'LegislationService.asmx/'
 service_sponsor             = 'SponsorService.asmx/'
 
 # attachments (conditionals)
 biennium_current            = 'biennium=2017-18'
+year_current                = 'year=2017'
 agency_house                = 'agency=House'
 agency_senate               = 'agency=Senate'
 committees_house            = [ 'committeeName=Agriculture & Natural Resources',
@@ -162,6 +165,12 @@ documents_classes           = [ 'documentClass=Amendments',
 #dictRead = httpGET(services_all, service_document, 'GetDocumentClasses', [biennium_current])
 #pprint(dictRead['ArrayOfAnyType']['anyType'])
 
+# GetAmendments
+# requires year attachment
+# returns all documents with type as 'amendment'
+#dictRead = httpGET(services_all, service_amendment, 'GetAmendments', [year_current])
+#pprint(dictRead['ArrayOfAmendment']['Amendment'])
+
 # GetSponsors
 # requires biennium attachment
 # returns all representatives and senators that servered during target
@@ -250,10 +259,18 @@ documents_classes           = [ 'documentClass=Amendments',
 #dictRead = httpGET(services_all, service_committee_meetings, 'GetCommitteeMeetingItems', ['agendaId=27512'])
 #pprint(dictRead['ArrayOfCommitteeMeetingItem']['CommitteeMeetingItem'])
 
+# GetCommitteeExecutiveActionsByBill
+# requires biennium attachment
+# requires billNumber attachment
+#       (get from GetDocuments, attribute: 'BillId', string split [1] on ' ')
+# returns committee actions from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetCommitteeExecutiveActionsByBill', [biennium_current, 'billNumber=1017'])
+#pprint(dictRead['ArrayOfCommitteeAction']['CommitteeAction'])
 
-# EXAMPLE CHAIN CALL
+
+# EXAMPLE CHAIN CALLS
 # get all house committees and their members
-def exampleChainCall():
+def getHouseCommitteeMembers():
     committeesRead = httpGET(services_all, service_committee, 'GetActiveHouseCommittees', [])
     committeesList = []
     for committee in committeesRead['ArrayOfCommittee']['Committee']:
@@ -275,5 +292,29 @@ def exampleChainCall():
 
     return committeesDict
 
-#returnedChain = exampleChainCall()
+#returnedChain = getHouseCommitteeMembers()
 #pprint(returnedChain)
+
+# get all documents of type 'Bill' and get their committee actions
+def getBillsAndActions():
+    billsRead = httpGET(services_all, service_document, 'GetAllDocumentsByClass', [biennium_current, documents_classes[2]])
+    billsList = []
+    for bill in billsRead['ArrayOfLegislativeDocument']['LegislativeDocument']:
+        billsList.append(bill['BillId'].split()[1])
+
+    print('Safe to run bills:')
+    print(billsList)
+    print('---------------------------------------------------------------')
+
+    actionsDict = {}
+    for bill in billsList[:10]:
+        actionsRead = httpGET(services_all, service_committee_actions, 'GetCommitteeExecutiveActionsByBill', [biennium_current, 'billNumber=' + bill])
+        dataBack = {}
+        try:
+            dataBack = actionsDict['ArrayOfCommitteeAction']['CommitteeAction']
+        except:
+            dataBack = {'Action' : 'None'}
+
+    return actionsDict
+
+pprint(getBillsAndActions())

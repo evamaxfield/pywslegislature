@@ -21,6 +21,7 @@ def httpGET(arch, service, call, attachments):
         read = requests.get(getRequest)
         dictRead = xmltodict.parse(read.content)
     except:
-        dictRead = {'ERROR': 'Failed to retrieve data'}
+        print('Error! Failed to retrieve data')
+        dictRead = read.content
 
     return dictRead
