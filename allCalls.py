@@ -267,6 +267,106 @@ documents_classes           = [ 'documentClass=Amendments',
 #dictRead = httpGET(services_all, service_committee_actions, 'GetCommitteeExecutiveActionsByBill', [biennium_current, 'billNumber=1017'])
 #pprint(dictRead['ArrayOfCommitteeAction']['CommitteeAction'])
 
+# GetCommitteeReferralsByBill
+# requires biennium attachment
+# requires billNumber attachment
+#       (get from GetDocuments, attribute: 'BillId', string split [1] on ' ')
+# returns committee referrals from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetCommitteeReferralsByBill', [biennium_current, 'billNumber=1017'])
+#pprint(dictRead['ArrayOfCommitteeReferral']['CommitteeReferral'])
+
+# GetCommitteeReferralsByCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns committee referrals from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetCommitteeReferralsByCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfCommitteeReferral']['CommitteeReferral'])
+
+# GetDoPassByCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns all bills with do pass label from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetDoPassByCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+# GetDoPassSubstituteByCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns all bills with do pass with substitute label from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetDoPassSubstituteByCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+# GetDoPassWithAmendmentsByCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns all bills with do pass with amendments label from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetDoPassWithAmendmentsByCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+### VERY UNCOMMON ###
+# GetDoPassWithAmendmentsToSubByCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns all bills with do pass with amendments to substitute label from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetDoPassWithAmendmentsToSubByCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+# GetInCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns all bills currently in target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetInCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+# GetLegislationReportedOutOfCommittee
+# requires committeeName attachment
+# requires agency attachment
+# requires beginDate attachment
+# requires endDate attachment
+# returns all legislation out from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetLegislationReportedOutOfCommittee', [committees_house[1], agency_house, 'beginDate=2017-02-06', 'endDate=2017-04-30'])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+# GetMajorityReportByCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns all bills with status majority report from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetMajorityReportByCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+# GetMinorityReportByCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns all bills with status minority report from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetMinorityReportByCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+### VERY UNCOMMON ###
+# GetReReferralByCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns all bills with status re-referral from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetReReferralByCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+### VERY UNCOMMON ###
+# GetReferredToAnotherCommitteeByCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns all bills with status referred to another from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetReferredToAnotherCommitteeByCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
 
 # EXAMPLE CHAIN CALLS
 # get all house committees and their members
@@ -311,10 +411,11 @@ def getBillsAndActions():
         actionsRead = httpGET(services_all, service_committee_actions, 'GetCommitteeExecutiveActionsByBill', [biennium_current, 'billNumber=' + bill])
         dataBack = {}
         try:
-            dataBack = actionsDict['ArrayOfCommitteeAction']['CommitteeAction']
+            dataBack = actionsRead['ArrayOfCommitteeAction']['CommitteeAction']
         except:
             dataBack = {'Action' : 'None'}
 
+        actionsDict[bill] = dataBack
     return actionsDict
 
-pprint(getBillsAndActions())
+#pprint(getBillsAndActions())
