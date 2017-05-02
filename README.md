@@ -19,10 +19,10 @@ There is additionally an example of a chain api call in the allCalls.py file to 
 ## Completed and Uncompleted API Calls:
 - [x] Amendments
 - [x] Committees (Known Issues with Committee Names)
-- [ ] Committee Actions
+- [x] Committee Actions
 - [x] Committee Meetings
 - [x] Documents
 - [ ] Legislation
 - [ ] RCW Cite Affected
-- [ ] Session Law
+- [x] Session Law
 - [x] Sponsors

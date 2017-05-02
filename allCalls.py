@@ -18,11 +18,13 @@ service_committee_actions   = 'CommitteeActionService.asmx/'
 service_amendment           = 'AmendmentService.asmx/'
 service_document            = 'LegislativeDocumentService.asmx/'
 service_legislation         = 'LegislationService.asmx/'
+service_session_law         = 'SessionLawService.asmx/'
 service_sponsor             = 'SponsorService.asmx/'
 
 # attachments (conditionals)
 biennium_current            = 'biennium=2017-18'
 year_current                = 'year=2017'
+session_current             = ''
 agency_house                = 'agency=House'
 agency_senate               = 'agency=Senate'
 committees_house            = [ 'committeeName=Agriculture & Natural Resources',
@@ -366,6 +368,52 @@ documents_classes           = [ 'documentClass=Amendments',
 # returns all bills with status referred to another from target
 #dictRead = httpGET(services_all, service_committee_actions, 'GetReferredToAnotherCommitteeByCommittee', [biennium_current, agency_house, committees_house[1]])
 #pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+# GetReferredToCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns all bills with status referred to target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetReferredToCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+# GetRemovedFromCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns all bills with removed status from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetRemovedFromCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+### VERY UNCOMMON ###
+# GetWithoutRecommendationByCommittee
+# requires biennium attachment
+# requires agency attachment
+# requires committeeName attachment
+# returns all bills with status without recommendation from target
+#dictRead = httpGET(services_all, service_committee_actions, 'GetWithoutRecommendationByCommittee', [biennium_current, agency_house, committees_house[1]])
+#pprint(dictRead['ArrayOfLegislationInfo']['LegislationInfo'])
+
+# GetChapterNumbersByYear
+# requires year attachment
+# returns all chapters in target
+#dictRead = httpGET(services_all, service_session_law, 'GetChapterNumbersByYear', [year_current])
+#pprint(dictRead['ArrayOfSessionLaw']['SessionLaw'])
+
+# GetSessionLawByBill
+# requires biennium attachment
+# require billNumber attachment
+# returns session law information for target
+#dictRead = httpGET(services_all, service_session_law, 'GetSessionLawByBill', [biennium_current, 'billNumber=1001'])
+#pprint(dictRead['SessionLaw'])
+
+# GetBillByChapterNumber
+# requires year attachment
+# requires session attachment
+# requires chapterNumber attachment
+# returns bill information from target
+#dictRead = httpGET(services_all, service_session_law, 'GetBillByChapterNumber', [year_current, 'session=0', 'chapterNumber=43'])
+#pprint(dictRead['Legislation'])
 
 
 # EXAMPLE CHAIN CALLS
