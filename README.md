@@ -26,3 +26,12 @@ There is additionally an example of a chain api call in the allCalls.py file to 
 - [ ] RCW Cite Affected
 - [x] Session Law
 - [x] Sponsors
+
+## Timeline:
+- [x] API Replication and Data Comprehension
+- [ ] Database (Firebase + Relational) Modeling
+- [ ] Construct Datapiplines and Manipulation
+- [ ] Mass Data Grab and Store
+- [ ] Construct Front-End and Connect Services
+- [ ] Create Auto-Updating Scripts
+- [ ] Create Exportable Datasets
