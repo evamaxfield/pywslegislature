@@ -2,6 +2,7 @@
 Data grabbing and potential redesign of Washington State Legislative Web Services.
 
 [Link to the WSLWebServices API](http://wslwebservices.leg.wa.gov/#Table1)
+[Link to Python-Firebase Reference](https://pypi.python.org/pypi/python-firebase/1.2)
 
 ## About the Project:
 I am starting up this project because I personally think the Washington Legislature website could use a bit of a UX makeover.
