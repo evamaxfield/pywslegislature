@@ -1,24 +1,24 @@
 #firebase
   documentInfo:
-    documentClasses:
+    classes:
       0:  fill
       1:  fill
       2:  fill
       ...
       n:  fill
-    documentStatus:
+    status:
       0:  fill
       1:  fill
       2:  fill
       ...
       n:  fill
-    documentActions:
+    actions:
       0:  fill
       1:  fill
       2:  fill
       ...
       n:  fill
-    documentNaming:
+    naming:
       0:  fill
       1:  fill
       2:  fill
