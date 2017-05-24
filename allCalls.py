@@ -4,6 +4,9 @@
 # Created by Jackson Maxfield Brown
 # 19 April 2017
 
+# Most Recent Update
+# 24 May 2017
+
 # imports
 from CallWashingtonLegislature  import httpGET
 from pprint                     import pprint
@@ -11,6 +14,45 @@ from pprint                     import pprint
 # connection to services
 services_all                = 'http://wslwebservices.leg.wa.gov/'
 
+services_                   = {
+                                'committee': 'CommitteeService.asmx/',
+                                'committee_meetings': 'CommitteeMeetingService.asmx/',
+                                'committee_actions': 'CommitteeActionService.asmx/',
+                                'amendment': 'AmendmentService.asmx/',
+                                'document': 'LegislativeDocumentService.asmx/',
+                                'legislation': 'LegislationService.asmx/',
+                                'session_law': 'SessionLawService.asmx/',
+                                'sponsor': 'SponsorService.asmx/'
+                            }
+
+committees_house_           = {
+                                'Agriculture & Natural Resources': 'committeeName=Agriculture & Natural Resources',
+                                'Appropriations': 'committeeName=Appropriations',
+                                'Business & Financial Services': 'committeeName=Business & Financial Services',
+                                'Capital Budget': 'committeeName=Capital Budget',
+                                'Commerce & Gaming': 'committeeName=Commerce & Gaming',
+                                'Community Development, Housing & Tribal Affairs': 'committeeName=Community Development, Housing & Tribal Affairs',
+                                'Early Learning & Human Services': 'committeeName=Early Learning & Human Services',
+                                'Education': 'committeeName=Education',
+                                'Environment': 'committeeName=Environment',
+                                'Finance': 'committeeName=Finance',
+                                'Health Care & Wellness': 'committeeName=Health Care & Wellness',
+                                'Higher Education': 'committeeName=Higher Education',
+                                'Judiciary': 'committeeName=Judiciary',
+                                'Labor & Workplace Standards': 'committeeName=Labor & Workplace Standards',
+                                'Local Government': 'committeeName=Local Government',
+                                'Public Safety': 'committeeName=Public Safety',
+                                'Rules': 'committeeName=Rules',
+                                'State Government, Elections & Information Technology': 'committeeName=State Government, Elections & Information Technology',
+                                'Technology & Economic Development': 'committeeName=Technology & Economic Development',
+                                'Transportation': 'committeeName=Transportation'
+                            }
+
+committees_house_active_    = {
+
+}
+
+'''
 # connection to specific service
 service_committee           = 'CommitteeService.asmx/'
 service_committee_meetings  = 'CommitteeMeetingService.asmx/'
@@ -20,6 +62,7 @@ service_document            = 'LegislativeDocumentService.asmx/'
 service_legislation         = 'LegislationService.asmx/'
 service_session_law         = 'SessionLawService.asmx/'
 service_sponsor             = 'SponsorService.asmx/'
+'''
 
 # attachments (conditionals)
 biennium_current            = 'biennium=2017-18'
@@ -27,7 +70,7 @@ year_current                = 'year=2017'
 session_current             = ''
 agency_house                = 'agency=House'
 agency_senate               = 'agency=Senate'
-committees_house            = [ 'committeeName=Agriculture & Natural Resources',
+'''committees_house            = [ 'committeeName=Agriculture & Natural Resources',
                                 'committeeName=Appropriations',
                                 'committeeName=Business & Financial Services',
                                 'committeeName=Capital Budget',
@@ -47,6 +90,8 @@ committees_house            = [ 'committeeName=Agriculture & Natural Resources',
                                 'committeeName=State Government, Elections & Information Technology',
                                 'committeeName=Technology & Economic Development',
                                 'committeeName=Transportation']
+'''
+
 committees_house_active     = [ 'committeeName=Agriculture & Natural Resources',
                                 'committeeName=Appropriations',
                                 'committeeName=Business & Financial Services',
@@ -67,6 +112,11 @@ committees_house_active     = [ 'committeeName=Agriculture & Natural Resources',
                                 'committeeName=State Government, Elections & Information Technology',
                                 'committeeName=Technology & Economic Development',
                                 'committeeName=Transportation']
+
+for committee in committees_house_active:
+    committees_house_active_[committee[14:]] = committee
+
+pprint(committees_house_active_dict)
 committees_senate           = [ 'committeeName=Agriculture, Water, Trade & Economic Development',
                                 'committeeName=Commerce, Labor & Sports',
                                 'committeeName=Early Learning & K-12 Education',
