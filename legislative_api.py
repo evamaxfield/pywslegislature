@@ -18,6 +18,20 @@ connection_services         = {
                                 'sponsor': 'SponsorService.asmx/'
                             }
 
+attachment_sources          = {
+                                'biennium': 'example: "2017-18"',
+                                'year': 'example: "2017"',
+                                'agency': 'example: "House"',
+                                'committeeName': 'retrieved from GetCommittees and related calls, "Name" attribute',
+                                'documentClass': 'retrieved from GetDocumentClasses and related calls, "#text" attribute',
+                                'namedLike': 'retrieved from GetAllDocumentsByClass and related calls, "Name" attribute',
+                                'beginDate': 'example: "2017-05-26"',
+                                'endDate': 'example: "2017-05-26"',
+                                'changedSinceDate': 'example: "2017-05-26"',
+                                'agendaId': 'retrieved from GetCommitteeMeetings and related calls, "AgendaId" attribute',
+                                'billNumber': 'retrieved from GetDocuments and related calls, "BillId" attribute; String.split(' ')[1]'
+                            }
+
 connection_labels           = {
                                 'GetCommittees': 'committee',
                                 'GetHouseCommittees': 'committee',
@@ -36,7 +50,16 @@ connection_labels           = {
                                 'GetAllDocumentsByClass': 'document',
                                 'GetDocumentsByClass': 'document',
                                 'GetDocuments': 'document',
-                                'GetCommitteeMeetings': 'committee_meetings'
+                                'GetCommitteeMeetings': 'committee_meetings',
+                                'GetRevisedCommitteeMeetings': 'committee_meetings',
+                                'GetCommitteeMeetingItems': 'committee_meetings',
+                                'GetCommitteeExecutiveActionsByBill': 'committee_actions',
+                                'GetCommitteeReferralsByBill': 'committee_actions',
+                                'GetCommitteeReferralsByCommittee': 'committee_actions',
+                                'GetDoPassByCommittee': 'committee_actions',
+                                'GetDoPassSubstituteByCommittee': 'committee_actions',
+                                'GetDoPassWithAmendmentsByCommittee': 'committee_actions',
+                                'GetDoPassWithAmendmentsToSubByCommittee': 'committee_actions'
                             }
 
 data_labels                 = {
@@ -57,7 +80,16 @@ data_labels                 = {
                                 'GetAllDocumentsByClass': ['ArrayOfLegislativeDocument', 'LegislativeDocument'],
                                 'GetDocumentsByClass': ['ArrayOfLegislativeDocument', 'LegislativeDocument'],
                                 'GetDocuments': ['ArrayOfLegislativeDocument', 'LegislativeDocument'],
-                                'GetCommitteeMeetings': ['ArrayOfCommitteeMeeting', 'CommitteeMeeting']
+                                'GetCommitteeMeetings': ['ArrayOfCommitteeMeeting', 'CommitteeMeeting'],
+                                'GetRevisedCommitteeMeetings': ['ArrayOfCommitteeMeeting', 'CommitteeMeeting'],
+                                'GetCommitteeMeetingItems': ['ArrayOfCommitteeMeetingItem', 'CommitteeMeetingItem'],
+                                'GetCommitteeExecutiveActionsByBill': ['ArrayOfCommitteeAction', 'CommitteeAction'],
+                                'GetCommitteeReferralsByBill': ['ArrayOfCommitteeReferral', 'CommitteeReferral'],
+                                'GetCommitteeReferralsByCommittee': ['ArrayOfCommitteeReferral', 'CommitteeReferral'],
+                                'GetDoPassByCommittee': ['ArrayOfLegislationInfo', 'LegislationInfo'],
+                                'GetDoPassSubstituteByCommittee': ['ArrayOfLegislationInfo', 'LegislationInfo'],
+                                'GetDoPassWithAmendmentsByCommittee': ['ArrayOfLegislationInfo', 'LegislationInfo'],
+                                'GetDoPassWithAmendmentsToSubByCommittee': ['ArrayOfLegislationInfo', 'LegislationInfo']
                             }
 
 # Attachments
@@ -71,6 +103,8 @@ agency_house                = 'House'
 committee_agnr              = 'Agriculture & Natural Resources'
 document_class              = 'Amendments'
 document_name               = '1017-S AMH APPL HATF 109'
+agenda_id                   = '26520'
+bill_id                     = '2201'
 
 def httpGET(arch, service, call, attachments):
     getRequest = arch + service + call + '?'
@@ -98,6 +132,16 @@ def httpGET(arch, service, call, attachments):
 
     return dictRead
 
+def storeCSV(df, call, attachments, label):
+    if len(label) == 0:
+        label = (call[3:] + '-')
+        for key, attachment in attachments.items():
+            label += (attachment + '-')
+        label += '.csv'
+
+    df.to_csv(label, sep=',')
+    print('Stored ' + call + ' at: ' + label)
+
 def processRequest(call, params):
     if params['info']:
         print(call + ' Function:')
@@ -107,6 +151,7 @@ def processRequest(call, params):
                 print('\t\tattachments:')
                 for key, attachment in params['attachments'].items():
                     print('\t\t\t' + key + ', default: ' + attachment)
+                    print('\t\t\t\t' + attachment_sources[key])
             elif key == 'info':
                 print('\t\t' + key + ', default: False')
             else:
@@ -120,32 +165,24 @@ def processRequest(call, params):
         dictRead = httpGET(connection_main, connection_services[connection_labels[call]], call, params['attachments'])
 
         if str(type(dictRead[data_labels[call][0]][data_labels[call][1]])) == "<class 'collections.OrderedDict'>":
-            data = pd.DataFrame(columns=dictRead[data_labels[call][0]][data_labels[call][1]])
-            data.loc[0] = dictRead[data_labels[call][0]][data_labels[call][1]]
-            if params['toCSV']:
-                if len(params['label']) == 0:
-                    params['label'] = (call[3:] + '-')
-                    for key, attachment in params['attachments'].items():
-                        params['label'] += (attachment + '-')
-                    params['label'] += '.csv'
+            try:
+                data = pd.DataFrame(columns=dictRead[data_labels[call][0]][data_labels[call][1]])
+                data.loc[0] = dictRead[data_labels[call][0]][data_labels[call][1]]
+                if params['toCSV']:
+                    storeCSV(data, call, params['attachments'], params['label'])
 
-                data.to_csv(params['label'], sep=',')
-                print('Stored ' + call + ' at: ' + params['label'])
+                return data
 
-            return data
+            except:
+                print('There was an error in the request')
+                print('Structure of returned:')
+                return dictRead
 
         else:
             try:
                 data = pd.DataFrame(dictRead[data_labels[call][0]][data_labels[call][1]])
                 if params['toCSV']:
-                    if len(params['label']) == 0:
-                        params['label'] = (call[3:] + '-')
-                        for attachment in params['attachments']:
-                            params['label'] += (attachment + '-')
-                        params['label'] += '.csv'
-
-                    data.to_csv(params['label'], sep=',')
-                    print('Stored ' + call + ' at: ' + params['label'])
+                    storeCSV(data, call, params['attachments'], params['label'])
 
                 return data
 
@@ -208,4 +245,31 @@ def GetDocuments(attachments={'biennium': biennium_current, 'namedLike': documen
     return processRequest(call=sys._getframe().f_code.co_name, params=locals())
 
 def GetCommitteeMeetings(attachments={'beginDate': date_start, 'endDate': date_current}, toCSV=False, info=False, label=''):
+    return processRequest(call=sys._getframe().f_code.co_name, params=locals())
+
+def GetRevisedCommitteeMeetings(attachments={'changedSinceDate': date_start}, toCSV=False, info=False, label=''):
+    return processRequest(call=sys._getframe().f_code.co_name, params=locals())
+
+def GetCommitteeMeetingItems(attachments={'agendaId': agenda_id}, toCSV=False, info=False, label=''):
+    return processRequest(call=sys._getframe().f_code.co_name, params=locals())
+
+def GetCommitteeExecutiveActionsByBill(attachments={'biennium': biennium_current, 'billNumber': bill_id}, toCSV=False, info=False, label=''):
+    return processRequest(call=sys._getframe().f_code.co_name, params=locals())
+
+def GetCommitteeReferralsByBill(attachments={'biennium': biennium_current, 'billNumber': bill_id}, toCSV=False, info=False, label=''):
+    return processRequest(call=sys._getframe().f_code.co_name, params=locals())
+
+def GetCommitteeReferralsByCommittee(attachments={'biennium': biennium_current, 'agency': agency_house, 'committeeName': committee_agnr}, toCSV=False, info=False, label=''):
+    return processRequest(call=sys._getframe().f_code.co_name, params=locals())
+
+def GetDoPassByCommittee(attachments={'biennium': biennium_current, 'agency': agency_house, 'committeeName': committee_agnr}, toCSV=False, info=False, label=''):
+    return processRequest(call=sys._getframe().f_code.co_name, params=locals())
+
+def GetDoPassSubstituteByCommittee(attachments={'biennium': biennium_current, 'agency': agency_house, 'committeeName': committee_agnr}, toCSV=False, info=False, label=''):
+    return processRequest(call=sys._getframe().f_code.co_name, params=locals())
+
+def GetDoPassWithAmendmentsByCommittee(attachments={'biennium': biennium_current, 'agency': agency_house, 'committeeName': committee_agnr}, toCSV=False, info=False, label=''):
+    return processRequest(call=sys._getframe().f_code.co_name, params=locals())
+
+def GetDoPassWithAmendmentsToSubByCommittee(attachments={'biennium': biennium_current, 'agency': agency_house, 'committeeName': committee_agnr}, toCSV=False, info=False, label=''):
     return processRequest(call=sys._getframe().f_code.co_name, params=locals())

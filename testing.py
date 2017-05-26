@@ -1,6 +1,7 @@
 from legislative_api import *
 
-'''print(GetCommittees(info=True), '\n')
+'''
+print(GetCommittees(info=True), '\n')
 print(GetCommittees(), '\n')
 
 print(GetHouseCommittees(info=True), '\n')
@@ -51,5 +52,39 @@ print(GetDocumentsByClass(), '\n')
 print(GetDocuments(info=True), '\n')
 print(GetDocuments(), '\n')
 
+# known issue with orderedDictionary returned in attribute
 print(GetCommitteeMeetings(info=True), '\n')
-print(GetCommitteeMeetings(), '\n')'''
+print(GetCommitteeMeetings(), '\n')
+
+# known issue with orderedDictionary returned in attribute
+print(GetRevisedCommitteeMeetings(info=True), '\n')
+print(GetRevisedCommitteeMeetings(), '\n')
+
+print(GetCommitteeMeetingItems(info=True), '\n')
+print(GetCommitteeMeetingItems(), '\n')
+
+print(GetCommitteeExecutiveActionsByBill(info=True), '\n')
+print(GetCommitteeExecutiveActionsByBill(), '\n')
+
+# known issue with orderedDictionary returned in attribute
+print(GetCommitteeReferralsByBill(info=True), '\n')
+print(GetCommitteeReferralsByBill(), '\n')
+
+# known issue with orderedDictionary returned in attribute
+print(GetCommitteeReferralsByCommittee(info=True), '\n')
+print(GetCommitteeReferralsByCommittee(), '\n')
+
+# known issue with orderedDictionary returned in attribute
+print(GetDoPassByCommittee(info=True), '\n')
+print(GetDoPassByCommittee(), '\n')
+
+# known issue with orderedDictionary returned in attribute
+print(GetDoPassSubstituteByCommittee(info=True), '\n')
+print(GetDoPassSubstituteByCommittee(), '\n')
+
+print(GetDoPassWithAmendmentsByCommittee(info=True), '\n')
+print(GetDoPassWithAmendmentsByCommittee(), '\n')
+
+# ISSUES NEED TO BE FIXED
+print(GetDoPassWithAmendmentsToSubByCommittee(info=True), '\n')
+print(GetDoPassWithAmendmentsToSubByCommittee(), '\n')'''
