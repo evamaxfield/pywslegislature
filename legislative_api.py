@@ -164,6 +164,10 @@ def processRequest(call, params):
     else:
         dictRead = httpGET(connection_main, connection_services[connection_labels[call]], call, params['attachments'])
 
+        if len(dictRead[data_labels[call][0]]) == 3:
+            print('No objects to return')
+            return None
+
         if str(type(dictRead[data_labels[call][0]][data_labels[call][1]])) == "<class 'collections.OrderedDict'>":
             try:
                 data = pd.DataFrame(columns=dictRead[data_labels[call][0]][data_labels[call][1]])
