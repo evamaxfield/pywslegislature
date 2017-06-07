@@ -164,9 +164,19 @@ def processRequest(call, params):
     else:
         dictRead = httpGET(connection_main, connection_services[connection_labels[call]], call, params['attachments'])
 
-        if len(dictRead[data_labels[call][0]]) == 3:
+        if str(type(dictRead)) == "<class 'bytes'>":
+            print('Error in retrieving data')
+            print('Most likely: Error in parameter values')
+            print('--------------------------------------')
+            print(globals()[call](info=True))
+            print('Returned read:')
+            print(dictRead)
+            return None
+
+        if len(dictRead[data_labels[call][0]]) < 4:
             print('No objects to return')
             return None
+
 
         if str(type(dictRead[data_labels[call][0]][data_labels[call][1]])) == "<class 'collections.OrderedDict'>":
             try:
