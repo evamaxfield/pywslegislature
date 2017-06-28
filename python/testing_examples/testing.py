@@ -1,6 +1,5 @@
 from legislative_api import *
 
-
 '''print(GetCommittees(info=True), '\n')
 print(type(GetCommittees()), '\n')
 
