@@ -1,0 +1,6 @@
+1. would it be good to have auto replace only targeted params
+    my reasoning: not really... if the call failed, which shouldn't happen with a proper web interface,
+    then it will return the default and example calls with the full error.
+
+    short: it can be handled client side, if client really wants to break,
+    it doesn't have any effect

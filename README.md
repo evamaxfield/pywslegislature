@@ -24,16 +24,20 @@ There is additionally an example of a chain api call in the allCalls.py file to 
 - [x] Committee Actions
 - [x] Committee Meetings
 - [x] Documents
-- [ ] Legislation
-- [ ] RCW Cite Affected
+- [x] Legislation
+- [x] RCW Cite Affected
 - [x] Session Law
 - [x] Sponsors
 
 ## Timeline:
 - [x] API Replication and Data Comprehension
 - [ ] Database (Firebase + Relational) Modeling
+   - on hold
 - [ ] Construct Datapiplines and Manipulation
+   - on hold
 - [ ] Mass Data Grab and Store
+   - on hold
 - [ ] Construct Front-End and Connect Services
+   - Design Started
 - [ ] Create Auto-Updating Scripts
 - [ ] Create Exportable Datasets
