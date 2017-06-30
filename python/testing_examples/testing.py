@@ -50,12 +50,12 @@ print(type(GetDocumentsByClass()), '\n')
 
 print(GetDocuments(info=True), '\n')
 print(type(GetDocuments()), '\n')
-
+'''
 # known issue with orderedDictionary returned in attribute
 print(GetCommitteeMeetings(info=True), '\n')
-print(type(GetCommitteeMeetings()), '\n')
+print(GetCommitteeMeetings(), '\n')
 
-# known issue with orderedDictionary returned in attribute
+'''
 print(GetRevisedCommitteeMeetings(info=True), '\n')
 print(type(GetRevisedCommitteeMeetings()), '\n')
 
@@ -248,9 +248,8 @@ print(type(GetPreFiledLegislationInfo()), '\n')
 print(GetPrefiledLegislation(info=True), '\n')
 print(type(GetPrefiledLegislation()), '\n')
 
-# known issue with orderedDictionary returned in attribute
 print(GetPublishedEnrolledLegislation(info=True), '\n')
-print(type(GetPublishedEnrolledLegislation()), '\n')
+print(GetPublishedEnrolledLegislation(), '\n')
 
 print(GetRcwCitesAffected(info=True), '\n')
 print(type(GetRcwCitesAffected()), '\n')

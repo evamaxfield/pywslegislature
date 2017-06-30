@@ -4,3 +4,6 @@
 
     short: it can be handled client side, if client really wants to break,
     it doesn't have any effect
+
+2. known issue with orderedDictionary
+    ShortLegislationType = getLongLegislationType and return value

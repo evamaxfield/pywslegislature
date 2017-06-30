@@ -204,7 +204,6 @@ year_current                = '2017'
 date_start                  = '2017-03-01'
 date_current                = '2017-05-20'
 
-
 session_current             = '0'
 chapter_target              = '35'
 rcw_target                  = '35'
@@ -255,6 +254,33 @@ def storeCSV(df, call, attachments, label):
     df.to_csv(label, sep=',')
     print('Stored ' + call + ' at: ' + label)
 
+def reduceOrderedDict(data):
+    changed = False
+
+    for column in data.columns.values:
+        if str(type(data[column].iloc[0])) == "<class 'collections.OrderedDict'>":
+            reduction_keys = data[column].iloc[0].keys()
+            reduction_series_ = {}
+            for key in reduction_keys:
+                reduction = pd.Series(name = key)
+                reduction_series_[key] = reduction
+
+            for key, value in data[column].iteritems():
+                for real_key, real_value in value.items():
+                    reduction_series_[real_key].set_value(key, real_value)
+
+            del data[column]
+
+            for name, value in reduction_series_.items():
+                data[name] = value
+
+            changed = True
+
+        if changed:
+            data = reduceOrderedDict(data)
+
+    return data
+
 def processRequest(call, params):
     if params['info']:
         print(call + ' Function:')
@@ -298,6 +324,9 @@ def processRequest(call, params):
                 try:
                     data = pd.DataFrame(columns=dictRead[data_labels[call][0]][data_labels[call][1]])
                     data.loc[0] = dictRead[data_labels[call][0]][data_labels[call][1]]
+
+                    data = reduceOrderedDict(data)
+
                     if params['toCSV']:
                         storeCSV(data, call, params['attachments'], params['label'])
 
@@ -311,6 +340,9 @@ def processRequest(call, params):
             else:
                 try:
                     data = pd.DataFrame(dictRead[data_labels[call][0]][data_labels[call][1]])
+
+                    data = reduceOrderedDict(data)
+
                     if params['toCSV']:
                         storeCSV(data, call, params['attachments'], params['label'])
 
@@ -325,6 +357,9 @@ def processRequest(call, params):
             try:
                 data = pd.DataFrame(columns=dictRead[data_labels[call][0]])
                 data.loc[0] = dictRead[data_labels[call][0]]
+
+                data = reduceOrderedDict(data)
+
                 if params['toCSV']:
                     storeCSV(data, call, params['attachments'], params['label'])
 
@@ -338,6 +373,9 @@ def processRequest(call, params):
         else:
             try:
                 data = pd.DataFrame(dictRead[data_labels[call][0]])
+
+                data = reduceOrderedDict(data)
+
                 if params['toCSV']:
                     storeCSV(data, call, params['attachments'], params['label'])
 
