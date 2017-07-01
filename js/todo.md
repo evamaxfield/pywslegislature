@@ -1,0 +1,2 @@
+- [ ] i hate async
+   - [ ] just use firebase, its easier

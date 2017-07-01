@@ -1,3 +1,105 @@
+// sass for washington legislative web services
+// jackson maxfield brown
+// updated: 29 june 2017
+
+// IMPORTS
+
+// VARIABLES
+$darkteal: #1e2934
+$offwhite: #fafaf9
+$linen: darken($offwhite, 10%)
+$highlightred: #d85565
+$lightred: lighten($highlightred, 10%)
+$highlightteal: #5cc4be
+$lightteal: lighten($highlightteal, 10%)
+$fontstandard: sans-serif
+
 *
   margin: 0px
   padding: 0px
+
+// FLEX
+.flex-align-center
+  display: flex
+  align-items: center
+  vertical-align: bottom
+
+.flex-align-start
+  display: flex
+  align-items: flex-start
+
+.flex-justify-between
+  display: flex
+  justify-content: space-between
+
+.flex-justify-center
+  display: flex
+  justify-content: center
+
+.flex-wrap
+  flex-wrap: wrap
+
+// FONT
+.font-bigger
+  font-family: $fontstandard
+  font-size: 24px
+
+.font-smaller
+  font-family: $fontstandard
+  font-size: 12px
+
+.font-standard
+  font-family: $fontstandard
+  font-size: 16px
+
+.font-heavy
+  font-weight: bold
+
+.font-light
+  font-weight: lighter
+
+.footer-link
+  color: $offwhite
+  text-decoration: none
+
+  &:visited
+    color: $offwhite
+    text-decoration: none
+
+  &:hover
+    color: $linen
+
+// CONTAINERS
+.container-20
+  width: 20%
+
+.link-container
+  border-bottom: 1px solid transparent
+  margin: 20px 40% 20px 40%
+
+  &:hover
+    border-bottom: 1px solid $linen
+
+// POSITIONING
+.shove-right-10
+  margin-left: 10%
+
+// EFFECTS
+.transition-all-100
+  -webkit-transition: all 100ms ease-in-out
+  -moz-transition: all 100ms ease-in-out
+  -o-transition: all 100ms ease-in-out
+  transition: all 100ms ease-in-out
+
+// SINGLE
+#app
+  background-color: $offwhite
+  height: 100vh
+  width: 100%
+
+#footer
+  background-color: $darkteal
+  color: $offwhite
+  max-height: 30vh
+  padding: 40px 0px 40px 0px
+  width: 100%

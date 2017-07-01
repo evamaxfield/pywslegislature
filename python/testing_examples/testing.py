@@ -50,14 +50,13 @@ print(type(GetDocumentsByClass()), '\n')
 
 print(GetDocuments(info=True), '\n')
 print(type(GetDocuments()), '\n')
-'''
+
 # known issue with orderedDictionary returned in attribute
 print(GetCommitteeMeetings(info=True), '\n')
 print(GetCommitteeMeetings(), '\n')
 
-'''
 print(GetRevisedCommitteeMeetings(info=True), '\n')
-print(type(GetRevisedCommitteeMeetings()), '\n')
+print(GetRevisedCommitteeMeetings(toCSV=True), '\n')
 
 print(GetCommitteeMeetingItems(info=True), '\n')
 print(type(GetCommitteeMeetingItems()), '\n')
