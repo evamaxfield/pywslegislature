@@ -1,13 +1,18 @@
 // sass for washington legislative web services
 // jackson maxfield brown
-// updated: 29 june 2017
+// updated: 2 july 2017
 
 // IMPORTS
 
 // VARIABLES
-$darkteal: #1e2934
+$twilight: #1e2934
 $offwhite: #fafaf9
-$linen: darken($offwhite, 10%)
+$lightlightgray: #eeeff0
+$midlightgray: darken($lightlightgray, 10%)
+$middarkgray: #adaeaf
+$darkgray: darken($midlightgray, 20%)
+$darkdarkgray: #3a3a3b
+$linen: darken($offwhite, 40%)
 $highlightred: #d85565
 $lightred: lighten($highlightred, 10%)
 $highlightteal: #5cc4be
@@ -73,6 +78,22 @@ $fontstandard: sans-serif
 .container-20
   width: 20%
 
+.data-table
+  box-shadow: 1px 1px 10px $middarkgray
+  height: 60vh
+  margin: 20vh auto 20vh auto
+  overflow-y: scroll
+  width: 60%
+
+.data-element
+  background-color: $lightlightgray
+  border-bottom: 1px solid $darkdarkgray
+  height: 40px
+  width: 100%
+
+  &:hover
+    background-color: $midlightgray
+
 .link-container
   border-bottom: 1px solid transparent
   margin: 20px 40% 20px 40%
@@ -81,6 +102,9 @@ $fontstandard: sans-serif
     border-bottom: 1px solid $linen
 
 // POSITIONING
+.set-height-60
+  height: 60vh
+
 .shove-right-10
   margin-left: 10%
 
@@ -94,11 +118,11 @@ $fontstandard: sans-serif
 // SINGLE
 #app
   background-color: $offwhite
-  height: 100vh
+  min-height: 100vh
   width: 100%
 
 #footer
-  background-color: $darkteal
+  background-color: $twilight
   color: $offwhite
   max-height: 30vh
   padding: 40px 0px 40px 0px
