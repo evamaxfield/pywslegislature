@@ -17,6 +17,8 @@ I have finished replicating and expanding the api's functionality. Currently I a
 
 There is additionally an example of a chain api call in the allCalls.py file to understand how they can work together.
 
+Retry with ssh again...
+
 ## Completed and Uncompleted API Calls:
 *There are known issues with additional dictionaries being returned in an individual DataFrame/ csv cell. I am working on a patch. That addresses all use cases.*
 - [x] Amendments
