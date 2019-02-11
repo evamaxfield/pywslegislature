@@ -28,6 +28,9 @@ class WSLResults(object):
         self._request = request
         self._response = response
 
+        # Check the response
+        self.response.raise_for_status()
+
         # Lazy loaded
         self._xml = None
         self._json = None
