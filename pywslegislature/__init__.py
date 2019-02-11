@@ -11,4 +11,6 @@ def get_module_version():
     return __version__
 
 
-from .example import Example  # noqa: F401
+from .biennium import Biennium  # noqa: F401
+from .legislature import Legislature  # noqa: F401
+from .query import WSLRequest  # noqa: F401
