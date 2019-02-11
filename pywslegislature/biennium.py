@@ -20,10 +20,10 @@ class Biennium(object):
         """
         if year is None:
             self._dt = datetime.utcnow() - timedelta(hours=8)
-            log.debug("Setting biennium object to current PST datetime")
+            log.debug("Setting biennium object to current PST datetime: {}".format(self.dt))
         else:
             self._dt = datetime.strptime(str(year), "%Y")
-            log.debug("Setting biennium object to passed year as datetime")
+            log.debug("Setting biennium object to passed year as datetime: {}".format(self.dt))
 
         log.info("Biennium object created using dateime: {}".format(self.dt))
 

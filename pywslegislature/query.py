@@ -29,6 +29,7 @@ class WSLResults(object):
         self._response = response
 
         # Check the response
+        log.info("WSLResults {}, initialized with response status: {}".format(self, self.response.status_code))
         self.response.raise_for_status()
 
         # Lazy loaded
@@ -47,7 +48,7 @@ class WSLResults(object):
     def xml(self):
         if self._xml is None:
             self._xml = ElementTree.fromstring(self.response.content)
-            log.info("Parsed ElementTree from: {}".format(str(self)))
+            log.info("Parsed ElementTree from: {}".format(self))
 
         return self._xml
 
@@ -55,7 +56,7 @@ class WSLResults(object):
     def json(self):
         if self._json is None:
             self._json = xmltodict.parse(self.response.content)
-            log.info("Parsed OrderedDict from: {}".format(str(self)))
+            log.info("Parsed OrderedDict from: {}".format(self))
 
         return self._json
 
