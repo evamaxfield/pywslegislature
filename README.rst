@@ -45,9 +45,18 @@ Get a specific Washington State Legislature details::
 Specific WSL Web Services Handler::
 
     from pywslegislature import Biennium, WSLRequest
-    from pywslegislature.services import CommitteeService
+    from pywslegislature import services
 
-    request = WSLRequest(CommitteeService, "GetCommittees", {"biennium": str(Biennium(2013))})
+    print(services.COMMITTEE_SERVICE)
+    # <CommitteeService [Information on committees of the Washington State Legislature.]>
+
+    print(services.COMMITTEE_SERVICE.header)
+    # 'CommitteeService.asmx'
+
+    print(services.COMMITTEE_SERVICE.functions)
+    # [<GetCommittees, parameters: [{'name': 'biennium', 'example': '2019-20'}]>, <GetHouseCommittees, parameters: [{'name': 'biennium', 'example': '2019-20'}]>, <GetSenateCommittees, parameters: [{'name': 'biennium', 'example': '2019-20'}]>, <GetActiveCommittees, parameters: []>, <GetActiveHouseCommittees, parameters: []>, <GetActiveSenateCommittees, parameters: []>, <GetCommitteeMembers, parameters: [{'name': 'biennium', 'example': '2019-20'}]>, <GetActiveCommitteeMembers, parameters: []>]
+
+    request = WSLRequest(COMMITTEE_SERVICE.header, COMMITTEE_SERVICE.GetCommittees, {"biennium": str(Biennium(2013))})
     print(request)
     # <WSLRequest [http://wslwebservices.leg.wa.gov/CommitteeService.asmx/GetCommittees?biennium=2013-14]>
 
@@ -55,7 +64,7 @@ Specific WSL Web Services Handler::
     print(results)
     # <WSLResults [http://wslwebservices.leg.wa.gov/CommitteeService.asmx/GetCommittees?biennium=2013-14]>
 
-    # Results are available as xml.etree.ElementTree or as collections.OrderedDict
+    # Results are available as xml.etree.ElementTree or collections.OrderedDict
     print(results.xml)
     # ...
     print(results.json)
