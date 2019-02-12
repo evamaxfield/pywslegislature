@@ -5,7 +5,7 @@ import logging
 
 from .biennium import Biennium
 from .committee import Committee
-from .services import CommitteeService
+from .services import COMMITTEE_SERVICE
 from .query import WSLRequest
 
 ###############################################################################
@@ -39,7 +39,11 @@ class Legislature(object):
     @property
     def committees(self):
         if self._committees is None:
-            request = WSLRequest(CommitteeService, "GetCommittees", {"biennium": str(self.biennium)})
+            request = WSLRequest(
+                COMMITTEE_SERVICE.header,
+                COMMITTEE_SERVICE.GetCommittees.name,
+                {"biennium": str(self.biennium)}
+            )
             results = request.process().json["ArrayOfCommittee"]["Committee"]
             self._committees = [
                 Committee(c["Id"], c["Name"], c["LongName"], c["Agency"], c["Acronym"], c["Phone"]) for c in results
