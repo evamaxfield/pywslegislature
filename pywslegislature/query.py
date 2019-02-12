@@ -87,7 +87,7 @@ class WSLRequest(object):
 
     @property
     def formatted_attachments(self):
-        return ["{}={}".format(key, attachment.replace("&", "%26")) for key, attachment in self.attachments.items()]
+        return ["{}={}".format(key, str(att).replace("&", "%26")) for key, att in self.attachments.items()]
 
     def process(self, mock_return=None):
         """
