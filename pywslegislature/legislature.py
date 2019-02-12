@@ -53,7 +53,7 @@ class Legislature(object):
         return self._committees
 
     def __str__(self):
-        return "<Legislature [Biennium: {}]>".format(str(self.biennium))
+        return "<Legislature [{}]>".format(self.biennium)
 
     def __repr__(self):
         return str(self)
