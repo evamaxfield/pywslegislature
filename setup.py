@@ -30,9 +30,7 @@ setup(
     ],
     description="Python wrapper around the Washington State Legislative Web Services API with some extras.",
     entry_points={
-        'console_scripts': [
-            'my_example=pywslegislature.bin.my_example:main'
-        ],
+        'console_scripts': [],
     },
     install_requires=requirements,
     license="MIT license",

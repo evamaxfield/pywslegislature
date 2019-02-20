@@ -7,6 +7,7 @@ from typing import Dict
 class APIFunction(object):
 
     def __init__(self, name: str, parameters: Dict[str, str] = {}):
+        # Make hidden
         self._name = name
         self._parameters = [{"name": name, "example": example} for name, example in parameters.items()]
 
