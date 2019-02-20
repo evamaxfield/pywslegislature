@@ -14,7 +14,7 @@ pywslegislature
         :alt: Documentation Status
 
 
-Python wrapper around the `Washington State Legislative Web Services API <http://wslwebservices.leg.wa.gov/#Table1>`_ with some extras.
+Request wrappers around `Washington State Legislative Web Services API <http://wslwebservices.leg.wa.gov/#Table1>`_
 
 
 * Free software: MIT license
@@ -23,24 +23,6 @@ Python wrapper around the `Washington State Legislative Web Services API <http:/
 
 Quickstart
 ----------
-Get the most up-to-date Washington State Legislature details::
-
-    from pywslegislature import Legislature
-
-    current = Legislature()
-    print(current.committees[0])
-    # <Committee [17366 Appropriations House APP]>
-
-    print(current.committees[0].as_dict())
-    # {'id': 17366, 'name': 'Appropriations', 'long_name': 'House Committee on Appropriations', 'agency': 'House', 'acronym': 'APP', 'phone': 3607867155}
-
-Get a specific Washington State Legislature details::
-
-    from pywslegislature import Biennium, Legislature
-
-    specific = Legislature(Biennium(2013))
-    print(current.committees[0])
-    # <Committee [8221 Agriculture & Natural Resources House AGNR]>
 
 Specific WSL Web Services Handler::
 
@@ -66,6 +48,29 @@ Specific WSL Web Services Handler::
     # ...
     print(results.json)
     # ...
+
+In progress
+-----------
+ORM style mappings between Legilature objects:
+
+Get the most up-to-date Washington State Legislature details::
+
+    from pywslegislature import Legislature
+
+    current = Legislature()
+    print(current.committees[0])
+    # <Committee [17366 Appropriations House APP]>
+
+    print(current.committees[0].as_dict())
+    # {'id': 17366, 'name': 'Appropriations', 'long_name': 'House Committee on Appropriations', 'agency': 'House', ...
+
+Get a specific Washington State Legislature details::
+
+    from pywslegislature import Biennium, Legislature
+
+    specific = Legislature(Biennium(2013))
+    print(current.committees[0])
+    # <Committee [8221 Agriculture & Natural Resources House AGNR]>
 
 Credits
 -------
