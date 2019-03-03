@@ -61,9 +61,6 @@ Get the most up-to-date Washington State Legislature details::
     print(current.committees[0])
     # <Committee [17366 Appropriations House APP]>
 
-    print(current.committees[0].as_dict())
-    # {'id': 17366, 'name': 'Appropriations', 'long_name': 'House Committee on Appropriations', 'agency': 'House', ...
-
 Get a specific Washington State Legislature details::
 
     from pywslegislature import Biennium, Legislature

@@ -15,5 +15,12 @@ class CommitteeService(object):
     GetActiveCommittees = APIFunction("GetActiveCommittees")
     GetActiveHouseCommittees = APIFunction("GetActiveHouseCommittees")
     GetActiveSenateCommittees = APIFunction("GetActiveSenateCommittees")
-    GetCommitteeMembers = APIFunction("GetCommitteeMembers", {**ExampleParameters.biennium})
-    GetActiveCommitteeMembers = APIFunction("GetActiveCommitteeMembers")
+    GetCommitteeMembers = APIFunction("GetCommitteeMembers", {
+        **ExampleParameters.agency,
+        **ExampleParameters.biennium,
+        **ExampleParameters.committeeName
+    })
+    GetActiveCommitteeMembers = APIFunction("GetActiveCommitteeMembers", {
+        **ExampleParameters.agency,
+        **ExampleParameters.committeeName
+    })
