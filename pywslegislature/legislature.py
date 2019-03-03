@@ -42,7 +42,7 @@ class Legislature(object):
     def committees(self):
         # Lazy load committees
         if self._committees is None:
-            # Construct request using defaults and object biennium
+            # Construct request
             request = WSLRequest(
                 CommitteeService.header,
                 CommitteeService.GetCommittees.name,
@@ -54,9 +54,21 @@ class Legislature(object):
 
             # Convert to committee objects
             self._committees = [
-                Committee(c["Id"], c["Name"], c["LongName"], c["Agency"], c["Acronym"], c["Phone"]) for c in results
+                Committee(
+                    id=c["Id"],
+                    name=c["Name"],
+                    long_name=c["LongName"],
+                    agency=c["Agency"],
+                    biennium=self.biennium,
+                    acronym=c["Acronym"],
+                    phone=c["Phone"]
+                ) for c in results
             ]
-            log.info("Reduced returned results by selecting {}:{}".format("ArrayOfCommittee", "Committee"))
+            log.info("Reduced returned results, {}, by selecting {}:{}".format(
+                results,
+                "ArrayOfCommittee",
+                "Committee"
+            ))
 
         return self._committees
 

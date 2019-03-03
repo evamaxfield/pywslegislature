@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import json
 import logging
 import requests
 from typing import Dict
@@ -59,7 +60,8 @@ class WSLResults(object):
         # Lazy load parsed json
         if self._json is None:
             self._json = xmltodict.parse(self.response.content)
-            log.info("Parsed OrderedDict from: {}".format(self))
+            self._json = json.loads(json.dumps(self._json))
+            log.info("Parsed JSON from: {}".format(self))
 
         return self._json
 
