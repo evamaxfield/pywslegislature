@@ -9,10 +9,6 @@ pywslegislature
 .. image:: https://img.shields.io/travis/JacksonMaxfield/pywslegislature.svg
         :target: https://travis-ci.org/JacksonMaxfield/pywslegislature
 
-.. image:: https://readthedocs.org/projects/pywslegislature/badge/?version=latest
-        :target: https://pywslegislature.readthedocs.io/en/latest/?badge=latest
-        :alt: Documentation Status
-
 
 Request wrappers around `Washington State Legislative Web Services API <http://wslwebservices.leg.wa.gov/#Table1>`_
 
