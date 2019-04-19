@@ -4,13 +4,19 @@
 import json
 import logging
 import requests
-from typing import Dict
+from typing import Dict, Union
 from xml.etree import ElementTree
 import xmltodict
 
+from .services.apifunction import APIFunction
+
 ###############################################################################
 
-log = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(levelname)4s: %(module)s:%(lineno)4s %(asctime)s] %(message)s'
+)
+log = logging.getLogger(__file__)
 
 ###############################################################################
 
@@ -31,7 +37,7 @@ class WSLResults(object):
         self._response = response
 
         # Check the response
-        log.info("WSLResults {}, initialized with response status: {}".format(self, self.response.status_code))
+        log.debug("WSLResults {}, initialized with response status: {}".format(self, self.response.status_code))
         self.response.raise_for_status()
 
         # Lazy loaded
@@ -51,7 +57,7 @@ class WSLResults(object):
         # Lazy load parsed xml
         if self._xml is None:
             self._xml = ElementTree.fromstring(self.response.content)
-            log.info("Parsed ElementTree from: {}".format(self))
+            log.debug("Parsed ElementTree from: {}".format(self))
 
         return self._xml
 
@@ -61,7 +67,7 @@ class WSLResults(object):
         if self._json is None:
             self._json = xmltodict.parse(self.response.content)
             self._json = json.loads(json.dumps(self._json))
-            log.info("Parsed JSON from: {}".format(self))
+            log.debug("Parsed JSON from: {}".format(self))
 
         return self._json
 
@@ -81,12 +87,34 @@ class WSLRequest(object):
     :param attachments: The parameters for the call.
     """
 
-    def __init__(self, service: str, call: str, attachments: Dict[str, str] = {}):
+    def __init__(self, service: str, call: Union[str, APIFunction], attachments: Dict[str, str] = {}):
         # These do not need to be hidden as users can edit them as much.
         # Any changing of values post-initialization won't result in any downstream errors.
         self.service = service
-        self.call = call
-        self.attachments = attachments
+
+        # Set the call if provided a string
+        if isinstance(call, str):
+            self.call = call
+            self.attachments = attachments
+        # If the call is an APIFunction, check the attachments
+        elif isinstance(call, APIFunction):
+            for param in call.parameters:
+                if param.name not in attachments:
+                    raise KeyError(f"Missing required query parameter: {param.name}")
+
+            # Drop any attachments that aren't in the APIFunction definition
+            required_attachments = [param.name for param in call.parameters]
+            valid_attachments = {}
+            for attachment, value in attachments.items():
+                if attachment in required_attachments:
+                    valid_attachments[attachment] = value
+
+            # Finally set the call to the string
+            self.call = call.name
+            self.attachments = valid_attachments
+        # Anything else should raise an error
+        else:
+            raise TypeError(f"WSLRequest call expects either: [str, APIFunction], received: {type(call)} {call}")
 
     @property
     def formatted_prefix(self):
