@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from datetime import datetime, timedelta
 import logging
-import json
 from typing import Union
 
 from .biennium import Biennium, pstnow
@@ -14,7 +12,11 @@ from .query import WSLRequest
 
 ###############################################################################
 
-log = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(levelname)4s: %(module)s:%(lineno)4s %(asctime)s] %(message)s'
+)
+log = logging.getLogger(__file__)
 
 ###############################################################################
 
@@ -125,7 +127,7 @@ class Committee(object):
 
                 # If any committee found in the meeting details retrieved
                 # create add a Meeting object to the list of meetings
-                if any(c.id==self.id for c in committees):
+                if any(c.id == self.id for c in committees):
                     self._meetings.append(
                         Meeting(
                             agenda_id=m["AgendaId"],
@@ -181,7 +183,7 @@ class Committee(object):
                     last_name=m["LastName"]
                 ) for m in results
             ]
-            log.info("Reduced returned results, {}, by selecting {}:{}".format(results, "ArrayOfMember", "Member"))
+            log.debug("Reduced returned results, {}, by selecting {}:{}".format(results, "ArrayOfMember", "Member"))
 
         return self._members
 

@@ -6,12 +6,17 @@ import logging
 
 ###############################################################################
 
-log = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(levelname)4s: %(module)s:%(lineno)4s %(asctime)s] %(message)s'
+)
+log = logging.getLogger(__file__)
 
 ###############################################################################
 
+
 def pstnow():
-    return datetime.utcnow() - timedelta(hours=8)
+    return datetime.utcnow() - timedelta(hours=7)
 
 
 class Biennium(object):
@@ -32,7 +37,7 @@ class Biennium(object):
             self._dt = datetime.strptime(str(year), "%Y")
             log.debug("Setting biennium object to passed year as datetime: {}".format(self.dt))
 
-        log.info("Biennium object created using dateime: {}".format(self.dt))
+        log.debug("Biennium object created using dateime: {}".format(self.dt))
 
         # Process biennium
         year_is_odd = self.year % 2 == 1

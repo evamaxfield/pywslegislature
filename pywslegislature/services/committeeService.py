@@ -9,18 +9,32 @@ class CommitteeService(object):
     header = "CommitteeService.asmx"
     description = "Information on committees of the Washington State Legislature."
     source = "http://wslwebservices.leg.wa.gov/CommitteeService.asmx"
-    GetCommittees = APIFunction("GetCommittees", {**ExampleParameters.biennium})
-    GetHouseCommittees = APIFunction("GetHouseCommittees", {**ExampleParameters.biennium})
-    GetSenateCommittees = APIFunction("GetSenateCommittees", {**ExampleParameters.biennium})
-    GetActiveCommittees = APIFunction("GetActiveCommittees")
-    GetActiveHouseCommittees = APIFunction("GetActiveHouseCommittees")
-    GetActiveSenateCommittees = APIFunction("GetActiveSenateCommittees")
-    GetCommitteeMembers = APIFunction("GetCommitteeMembers", {
-        **ExampleParameters.agency,
-        **ExampleParameters.biennium,
-        **ExampleParameters.committeeName
-    })
-    GetActiveCommitteeMembers = APIFunction("GetActiveCommitteeMembers", {
-        **ExampleParameters.agency,
-        **ExampleParameters.committeeName
-    })
+    GetCommittees = APIFunction(
+        "GetCommittees",
+        [ExampleParameters.biennium]
+    )
+    GetHouseCommittees = APIFunction(
+        "GetHouseCommittees",
+        [ExampleParameters.biennium]
+    )
+    GetSenateCommittees = APIFunction(
+        "GetSenateCommittees",
+        [ExampleParameters.biennium]
+    )
+    GetActiveCommittees = APIFunction(
+        "GetActiveCommittees"
+    )
+    GetActiveHouseCommittees = APIFunction(
+        "GetActiveHouseCommittees"
+    )
+    GetActiveSenateCommittees = APIFunction(
+        "GetActiveSenateCommittees"
+    )
+    GetCommitteeMembers = APIFunction(
+        "GetCommitteeMembers",
+        [ExampleParameters.agency, ExampleParameters.biennium, ExampleParameters.committeeName]
+    )
+    GetActiveCommitteeMembers = APIFunction(
+        "GetActiveCommitteeMembers",
+        [ExampleParameters.agency, ExampleParameters.committeeName]
+    )

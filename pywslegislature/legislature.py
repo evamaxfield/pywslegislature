@@ -10,7 +10,11 @@ from .query import WSLRequest
 
 ###############################################################################
 
-log = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format='[%(levelname)4s: %(module)s:%(lineno)4s %(asctime)s] %(message)s'
+)
+log = logging.getLogger(__file__)
 
 ###############################################################################
 
@@ -64,7 +68,7 @@ class Legislature(object):
                     phone=c["Phone"]
                 ) for c in results
             ]
-            log.info("Reduced returned results, {}, by selecting {}:{}".format(
+            log.debug("Reduced returned results, {}, by selecting {}:{}".format(
                 results,
                 "ArrayOfCommittee",
                 "Committee"
